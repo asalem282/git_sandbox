@@ -1,5 +1,5 @@
 import csv
-
+import sys
 
 def read_rows(path):
     with open(path, newline="") as f:
@@ -26,3 +26,12 @@ def remove_duplicates(rows):
             seen.add(key)
             unique.append(row)
     return unique
+def clean(rows):
+    rows = drop_empty_rows(rows)
+    rows = strip_whitespace(rows)
+    return remove_duplicates(rows)
+
+
+if __name__ == "__main__":
+    input_path, output_path = sys.argv[1], sys.argv[2]
+    write_rows(clean(read_rows(input_path)), output_path)
